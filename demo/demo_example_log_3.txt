@@ -1,0 +1,22 @@
+[
+  {
+    "event_id": "evt-3001",
+    "timestamp": "2026-01-31T11:00:00Z",
+    "event_type": "UNUSUAL_API_ACCESS",
+    "description": "Accessed high-value endpoint outside office hours",
+    "username": "service_account",
+    "ip": "45.66.77.88",
+    "endpoint": "/api/v1/finance",
+    "risk_score": 0.65
+  },
+  {
+    "event_id": "evt-3002",
+    "timestamp": "2026-01-31T11:02:00Z",
+    "event_type": "UNUSUAL_API_ACCESS",
+    "description": "High volume API requests in short time",
+    "username": "service_account",
+    "ip": "45.66.77.88",
+    "endpoint": "/api/v1/finance",
+    "risk_score": 0.68
+  }
+]
