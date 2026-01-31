@@ -2,8 +2,81 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
 from typing import Literal
+from fastapi import Query
 
 app = FastAPI(title="Guardrail AI Mock API")
+
+
+## Demo Data:
+# Demo log scenarios
+
+normal_logs = [
+    {
+        "event_id": "evt-1001",
+        "timestamp": "2026-01-31T10:00:00Z",
+        "event_type": "LOGIN_SUCCESS",
+        "description": "Regular login",
+        "username": "user1",
+        "ip": "203.0.113.10",
+        "risk_score": 0.1
+    },
+    {
+        "event_id": "evt-1002",
+        "timestamp": "2026-01-31T10:05:00Z",
+        "event_type": "API_ACCESS",
+        "description": "User accessed /api/data",
+        "username": "user2",
+        "ip": "203.0.113.11",
+        "endpoint": "/api/data",
+        "risk_score": 0.15
+    }
+]
+
+bruteforce_logs = [
+    {
+        "event_id": "evt-2001",
+        "timestamp": "2026-01-31T10:10:00Z",
+        "event_type": "FAILED_LOGIN",
+        "description": "Multiple failed admin login attempts",
+        "username": "admin",
+        "ip": "185.22.44.10",
+        "location": "Germany",
+        "risk_score": 0.85
+    },
+    {
+        "event_id": "evt-2002",
+        "timestamp": "2026-01-31T10:12:00Z",
+        "event_type": "FAILED_LOGIN",
+        "description": "Failed login attempt from same IP",
+        "username": "admin",
+        "ip": "185.22.44.10",
+        "location": "Germany",
+        "risk_score": 0.82
+    }
+]
+
+api_abuse_logs = [
+    {
+        "event_id": "evt-3001",
+        "timestamp": "2026-01-31T11:00:00Z",
+        "event_type": "UNUSUAL_API_ACCESS",
+        "description": "Accessed high-value endpoint outside office hours",
+        "username": "service_account",
+        "ip": "45.66.77.88",
+        "endpoint": "/api/v1/finance",
+        "risk_score": 0.65
+    },
+    {
+        "event_id": "evt-3002",
+        "timestamp": "2026-01-31T11:02:00Z",
+        "event_type": "UNUSUAL_API_ACCESS",
+        "description": "High volume API requests in short time",
+        "username": "service_account",
+        "ip": "45.66.77.88",
+        "endpoint": "/api/v1/finance",
+        "risk_score": 0.68
+    }
+]
 
 # ---------------------------
 # Models
@@ -57,27 +130,17 @@ class AdminSummaryResponse(BaseModel):
 
 
 ## Scenarios: normal,bruteforce,api_abuse
-# Recent logs → Threat Monitor
 @app.get("/logs/recent", response_model=List[LogEvent])
-def get_recent_logs(scenario: str = "normal"):
-    return [
-        {
-            "timestamp": "2026-01-30T10:15:00Z",
-            "event": "Failed admin login",
-            "username": "admin",
-            "ip": "185.22.44.10",
-            "location": "Germany",
-            "risk_score": 0.8
-        },
-        {
-            "timestamp": "2026-01-30T10:20:00Z",
-            "event": "Unusual API access",
-            "endpoint": "/api/v1/data",
-            "ip": "45.66.77.88",
-            "risk_score": 0.6
-        }
-    ]
-
+def get_recent_logs(scenario: str = Query("normal")):
+    if scenario == "normal":
+        return normal_logs
+    elif scenario == "bruteforce":
+        return bruteforce_logs
+    elif scenario == "api_abuse":
+        return api_abuse_logs
+    else:
+        return normal_logs
+    
 # Threat Analysis → Threat Analysis Agent
 @app.post("/threats/analyze", response_model=ThreatAnalysisResponse)
 def analyze_threat(request: ThreatAnalysisRequest):
