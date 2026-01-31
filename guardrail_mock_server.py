@@ -72,7 +72,7 @@ def get_recent_logs():
 def analyze_threat(request: ThreatAnalysisRequest):
     return {
         "threat_level": "Medium",
-        "context": f"{request.event} detected with risk score {request.risk_score}",
+        "context": f"{request.event_type} detected with risk score {request.risk_score}",
         "recommendation_priority": "Immediate review",
         "notes": "Could indicate credential stuffing attempt"
     }
@@ -96,8 +96,3 @@ def admin_summary(request: AdminSummaryRequest):
     return {
         "message": f"⚠️ Medium-risk activity detected: {request.threat_summary}. Recommended actions: {actions_str}."
     }
-
-# ---------------------------
-# Run the server
-# ---------------------------
-# Run with: uvicorn guardrail_mock_server:app --reload --port 8000
