@@ -1,0 +1,21 @@
+[
+  {
+    "event_id": "evt-1001",
+    "timestamp": "2026-01-31T10:00:00Z",
+    "event_type": "LOGIN_SUCCESS",
+    "description": "Regular login",
+    "username": "user1",
+    "ip": "203.0.113.10",
+    "risk_score": 0.1
+  },
+  {
+    "event_id": "evt-1002",
+    "timestamp": "2026-01-31T10:05:00Z",
+    "event_type": "API_ACCESS",
+    "description": "User accessed /api/data",
+    "username": "user2",
+    "ip": "203.0.113.11",
+    "endpoint": "/api/data",
+    "risk_score": 0.15
+  }
+]
