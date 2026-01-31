@@ -1,0 +1,22 @@
+[
+  {
+    "event_id": "evt-2001",
+    "timestamp": "2026-01-31T10:10:00Z",
+    "event_type": "FAILED_LOGIN",
+    "description": "Multiple failed admin login attempts",
+    "username": "admin",
+    "ip": "185.22.44.10",
+    "location": "Germany",
+    "risk_score": 0.85
+  },
+  {
+    "event_id": "evt-2002",
+    "timestamp": "2026-01-31T10:12:00Z",
+    "event_type": "FAILED_LOGIN",
+    "description": "Failed login attempt from same IP",
+    "username": "admin",
+    "ip": "185.22.44.10",
+    "location": "Germany",
+    "risk_score": 0.82
+  }
+]
