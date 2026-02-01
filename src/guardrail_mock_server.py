@@ -203,8 +203,10 @@ def admin_summary(request: AdminSummaryRequest):
             f"{request.threat_level} risk security activity detected. "
             f"{request.threat_summary}. "
             f"Recommended actions: {actions_str}."
-        )
+        ),
+        "severity": request.threat_level  # <--- Add this line
     }
+
 
 # ---------------------------
 # Run the server

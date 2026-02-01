@@ -1,6 +1,13 @@
+import sys
+from pathlib import Path
+
+# Add src folder to Python path dynamically
+sys.path.append(str(Path(__file__).resolve().parent.parent / "src"))
+
+# Now import the app
+from guardrail_mock_server import app
 import pytest
 from fastapi.testclient import TestClient
-from src.guardrail_mock_server import app
 
 client = TestClient(app)
 
